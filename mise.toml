@@ -1,0 +1,90 @@
+[tools]
+uv = "latest"
+
+[settings]
+python.uv_venv_auto = "source"
+
+[tasks.sync]
+description = "Sync all lab environments"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+for lab in lab{1..7}; do
+  echo "==> $lab"
+  uv sync --project "$lab"
+done
+"""
+
+[tasks.kernels]
+description = "Register Jupyter kernels for each lab"
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+for lab in lab{1..7}; do
+  echo "==> kernel $lab"
+  uv run --project "$lab" python -m ipykernel install --user \
+    --name="$lab" \
+    --display-name="Python ($lab)"
+done
+"""
+
+[tasks."lab1:sync"]
+description = "Sync lab1"
+run = "uv sync --project lab1"
+
+[tasks."lab2:sync"]
+description = "Sync lab2"
+run = "uv sync --project lab2"
+
+[tasks."lab3:sync"]
+description = "Sync lab3"
+run = "uv sync --project lab3"
+
+[tasks."lab4:sync"]
+description = "Sync lab4"
+run = "uv sync --project lab4"
+
+[tasks."lab5:sync"]
+description = "Sync lab5"
+run = "uv sync --project lab5"
+
+[tasks."lab6:sync"]
+description = "Sync lab6"
+run = "uv sync --project lab6"
+
+[tasks."lab7:sync"]
+description = "Sync lab7"
+run = "uv sync --project lab7"
+
+[tasks."lab1:notebook"]
+description = "Open lab1 notebook"
+dir = "lab1"
+run = "uv run jupyter notebook lab1_basket_analysis.ipynb"
+
+[tasks."lab1:add"]
+description = "Add package to lab1: mise run lab1:add -- PKG"
+run = "uv add --project lab1"
+
+[tasks."lab2:add"]
+description = "Add package to lab2: mise run lab2:add -- PKG"
+run = "uv add --project lab2"
+
+[tasks."lab3:add"]
+description = "Add package to lab3: mise run lab3:add -- PKG"
+run = "uv add --project lab3"
+
+[tasks."lab4:add"]
+description = "Add package to lab4: mise run lab4:add -- PKG"
+run = "uv add --project lab4"
+
+[tasks."lab5:add"]
+description = "Add package to lab5: mise run lab5:add -- PKG"
+run = "uv add --project lab5"
+
+[tasks."lab6:add"]
+description = "Add package to lab6: mise run lab6:add -- PKG"
+run = "uv add --project lab6"
+
+[tasks."lab7:add"]
+description = "Add package to lab7: mise run lab7:add -- PKG"
+run = "uv add --project lab7"
